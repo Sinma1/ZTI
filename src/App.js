@@ -1,58 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import React, { useState } from 'react';
 import './App.css';
+import { Layout, Menu } from 'antd';
+import Task1 from './pages/Task1';
+import Task2 from './pages/Task2';
+import { FileDoneOutlined } from '@ant-design/icons';
+import Task5 from './pages/Task5';
+const { Header, Content, Footer } = Layout;
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    const [currentPage, setCurrentPage] = useState('1');
+
+    const pageMap = {
+        '1': Task1,
+        '2': Task2,
+        '5': Task5,
+    };
+
+    const handleMenuClick = ({ key }) => setCurrentPage(key);
+
+    const Task = pageMap[currentPage];
+
+    return (
+        <Layout className='layout'>
+            <Header>
+                <div className='logo' />
+                <Menu theme='dark' mode='horizontal' onClick={handleMenuClick} selectedKeys={[currentPage]}>
+                    <Menu.Item icon={<FileDoneOutlined />} key='1'>
+                        Zadanie 1
+                    </Menu.Item>
+                    <Menu.Item icon={<FileDoneOutlined />} key='2'>
+                        Zadanie 2
+                    </Menu.Item>
+                    <Menu.Item icon={<FileDoneOutlined />} key='5'>
+                        Zadanie 5
+                    </Menu.Item>
+                </Menu>
+            </Header>
+            <Content style={{ padding: '0 50px' }}>
+                <div className='site-layout-content'>
+                    <Task />
+                </div>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>Created by Damian Ciftci</Footer>
+        </Layout>
+    );
+};
 
 export default App;
